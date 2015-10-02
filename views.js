@@ -30,15 +30,48 @@ var AddTaskView = Backbone.View.extend({
       var task = {
         title : this.$el.find('#title').val(),
         description : this.$el.find('#description').val(),
-        creator : app.currentUser,
+        dueDate: this.$el.find('#dueDate').val(),
+        importance: this.$el.find('#importance').val(),
+        creator : app.currentUser
       };
       app.tasks.create( task );
+      AssignedTasksView.render();
       console.log('task length is now ',app.tasks.length);
       this.remove();
       $('#app').removeClass('faded');
     },
   });
 //End code for addTaskView
+
+
+//Code for AssignedTaskView
+
+  var AssignedTasksView = Backbone.View.extend({
+    tagName: 'div',
+    className: 'AssignedTasksView column',
+
+    render: function () {
+      // var usernames = UserModel.model.get("value");
+      this.$el.html('<h1>Assigned Tasks</h1>');
+
+      for(var i = 0; i < app.tasks.length; i++){
+        if(app.tasks.at(i).get('assignee') && app.tasks.at(i).get('assignee') !== app.currentUser){
+          var viewB = new TaskView({model: app.tasks.at(i)});
+          this.$el.append(viewB.$el);
+        }
+    }
+
+    },
+    initialize: function () {
+      this.listenTo(app.tasks, 'change', this.render);
+      this.listenTo(app.tasks, 'update', this.render);
+      app.tasks.fetch();
+    },
+    events : {
+    },
+  });
+
+//End Code for Assigned TaskView
 
 
 
@@ -88,13 +121,9 @@ var AddTaskView = Backbone.View.extend({
       var all =  greeting + btn + logout;
 		this.$el.html(all);
 
-   //    $header.append([greeting, logout]);
-			// var $row = $('<div id="row">');
-   //    this.$el.prepend( $header );
-   //    this.$el.prepend( btn );
-
       $('#app').append(this.$el); // TODO: check if this works or not?
 	  },
+
     hi: function() {
       // console.log("you have successfully listened to a sync event");
     },
