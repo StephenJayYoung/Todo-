@@ -9,8 +9,9 @@ var AddTaskView = Backbone.View.extend({
       var $title = $('<input type="text" name="title" id="title" placeholder="task title">');
       var $description = $('<input type="text" name="description" id="description" placeholder="task description">');
       var $dueDate = $('<input type="text" name="dueDate" id="dueDate" placeholder="task due date">');
+      var $importance = $('<input type="text" name="importance" id="importance" placeholder="importance">');
       var $submit = $('<button id="submit">Submit</button>');
-      $form.append([$title, $description,$dueDate, $submit] );
+      $form.append([$dueDate, $title, $description, $importance, $submit] );
       this.$el.html($form);
     },
 
@@ -41,7 +42,7 @@ var AddTaskView = Backbone.View.extend({
 
 
 
-//Code for UserTakView
+//Code for UserTaskView////////////////////////////
   var UserTasksView = Backbone.View.extend({
     tagName: 'div',
   	className: 'UserTasksView column',
@@ -66,7 +67,7 @@ var AddTaskView = Backbone.View.extend({
   	events : {
   	},
   });
-//End Code for UserTaskView
+//End Code for UserTaskView///////////////////////////
 
 
 
@@ -81,34 +82,17 @@ var AddTaskView = Backbone.View.extend({
       },
   	render: function() {
 			var $header   = $('<div id="greeting">');
-      var greeting = '<h1>Hi, '+ app.currentUser + '!</h1>';
+			var greeting = '<h1>Hi, '+ app.currentUser + '!</h1>';
+			var btn = '<button id="newTask">Create A New Task</button>';
       var logout   = '<button id = "logout">Log-Out</button>';
-      var btn = '<button id="newTask">Create A New Task</button>';
+      var all =  greeting + btn + logout;
+		this.$el.html(all);
 
-      $header.append([greeting, logout]);
-			var $row     = $('<div id="row">');
+   //    $header.append([greeting, logout]);
+			// var $row = $('<div id="row">');
+   //    this.$el.prepend( $header );
+   //    this.$el.prepend( btn );
 
-			// var userTasksView = new UserTasksView();
-   //    app.userTasksView = userTasksView;
-			// userTasksView.render();
-
-			// var unassignedTasksView = new UnassignedTasksView();
-			// unassignedTasksView.render();
-
-   //    var assignedTasksView = new AssignedTasksView();
-   //    assignedTasksView.render();
-
-   //    var completedTasksView = new CompletedTasksView();
-   //    completedTasksView.render();
-
-      // $row.append(unassignedTasksView.$el);
-      // $row.append(userTasksView.$el);
-      // $row.append(assignedTasksView.$el);
-      // $row.append(completedTasksView.$el);
-
-      this.$el.prepend( $header );
-      this.$el.append($row);
-      this.$el.prepend( btn );
       $('#app').append(this.$el); // TODO: check if this works or not?
 	  },
     hi: function() {
