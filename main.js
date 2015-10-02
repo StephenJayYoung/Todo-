@@ -2,9 +2,9 @@ var app = {};
 
 $(function() { //when DOM is ready...
 	app.users = new UserCollection([
-		{username:'Person1', password: 'pizzaRat'},
-		{username:'Person2', password: 'motherGoose'},
-		{username:'Person3', password: 'snowMan'}
+		{username:'Person1', password: '1234'},
+		{username:'Person2', password: '12345'},
+		{username:'Person3', password: '123456'}
 	]);
 
 	app.issues = new IssueCollection([

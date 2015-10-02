@@ -2,7 +2,6 @@ var GUI = (function(){ //IIFE for all Views
 
 
 var LoginView = Backbone.View.extend ({
-console.log('logged in');
 
 });
 
