@@ -1,11 +1,8 @@
 var app = {};
 
 $(function() { //when DOM is ready...
-	app.users = new UserCollection([
-		{username:'Joseph'},
-		{username:'Nathaniel'},
-		{username:'Adam'}
-	]);
+	app.users = new UserCollection(
+);
 
 
 
