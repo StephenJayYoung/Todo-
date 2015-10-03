@@ -2,21 +2,21 @@ var GUI = (function(){ //IIFE for all Views
 
 //Code for AddTaskView
 var AddTaskView = Backbone.View.extend({
-    className: 'modal',
+    // className: 'modal',
 
     render: function(){
       var $form = $('<form>');
       var $title = $('<input type="text" name="title" id="title" placeholder="task title">');
       var $description = $('<input type="text" name="description" id="description" placeholder="task description">');
       var $dueDate = $('<input type="text" name="dueDate" id="dueDate" placeholder="task due date">');
-      var $importance = $('<input type="text" name="importance" id="importance" placeholder="importance">');
+      var $importance = '<select id = "dropdown">';
       var $submit = $('<button id="submit">Submit</button>');
       $form.append([$dueDate, $title, $description, $importance, $submit] );
       this.$el.html($form);
     },
 
     initialize: function(){
-      $('#app').addClass('faded');
+      // $('#app').addClass('faded');
       this.render();
       $('#app').append(this.$el);
     },
@@ -35,10 +35,11 @@ var AddTaskView = Backbone.View.extend({
         creator : app.currentUser
       };
       app.tasks.create( task );
-      AssignedTasksView.render();
+      var assignedTasksView = new AssignedTasksView();
+      assignedTasksView.render();
       console.log('task length is now ',app.tasks.length);
       this.remove();
-      $('#app').removeClass('faded');
+      // $('#app').removeClass('faded');
     },
   });
 //End code for addTaskView
@@ -47,19 +48,20 @@ var AddTaskView = Backbone.View.extend({
 //Code for AssignedTaskView
 
   var AssignedTasksView = Backbone.View.extend({
-    tagName: 'div',
-    className: 'AssignedTasksView column',
-
+    // tagName: 'div',
+    // className: 'AssignedTasksView column',
     render: function () {
-      // var usernames = UserModel.model.get("value");
-      this.$el.html('<h1>Assigned Tasks</h1>');
+    	console.log('cheese');
+    	// var $theTasks = app.tasks;
+    	// var $deleteTask = $('<button id="delete">Delete Task</button>');
+     //  this.$el.html($deleteTask + $theTasks);
 
-      for(var i = 0; i < app.tasks.length; i++){
-        if(app.tasks.at(i).get('assignee') && app.tasks.at(i).get('assignee') !== app.currentUser){
-          var viewB = new TaskView({model: app.tasks.at(i)});
-          this.$el.append(viewB.$el);
-        }
-    }
+    //   for(var i = 0; i < app.tasks.length; i++){
+    //     if(app.tasks.at(i).get('assignee') && app.tasks.at(i).get('assignee') !== app.currentUser){
+    //       var viewB = new TaskView({model: app.tasks.at(i)});
+    //       this.$el.append(viewB.$el);
+    //     }
+    // }
 
     },
     initialize: function () {
@@ -68,6 +70,7 @@ var AddTaskView = Backbone.View.extend({
       app.tasks.fetch();
     },
     events : {
+    	'click #delete' : 'deleteTask'
     },
   });
 
@@ -77,8 +80,8 @@ var AddTaskView = Backbone.View.extend({
 
 //Code for UserTaskView////////////////////////////
   var UserTasksView = Backbone.View.extend({
-    tagName: 'div',
-  	className: 'UserTasksView column',
+   //  tagName: 'div',
+  	// className: 'UserTasksView column',
 
   	render: function () {
 			var usernames = UserModel.model.get("value");
@@ -107,11 +110,11 @@ var AddTaskView = Backbone.View.extend({
 
 //Code for UserView//////////////////////////
   var UserView = Backbone.View.extend({
-    id : 'UserView',
+    // id : 'UserView',
     initialize: function () {
-      this.listenTo(app.tasks, 'sync', this.hi);
-      // app.tasks.on('sync', this.hi);
-      app.tasks.fetch();
+      // this.listenTo(app.tasks, 'sync', this.hi);
+      // // app.tasks.on('sync', this.hi);
+      // app.tasks.fetch();
       },
   	render: function() {
 			var $header   = $('<div id="greeting">');
@@ -154,7 +157,7 @@ var AddTaskView = Backbone.View.extend({
 
 //Code for the Login View ////////////////////////////////
 var LoginView = Backbone.View.extend({
-  id : 'LoginView',
+  // id : 'LoginView',
 	render: function() {
 		var button = '<button id = "login">Login</button>';
     // app.users.fetch();
