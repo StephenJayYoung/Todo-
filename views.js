@@ -1,5 +1,8 @@
 var GUI = (function(){ //IIFE for all Views
 
+// app.users = [ {name: "TEST", password: "TEST"} ];
+
+
 //Code for AddTaskView
 var AddTaskView = Backbone.View.extend({
     className: 'modal',
@@ -46,60 +49,60 @@ var AddTaskView = Backbone.View.extend({
 
 //Code for AssignedTaskView
 
-  var AssignedTasksView = Backbone.View.extend({
-    tagName: 'div',
-    className: 'AssignedTasksView column',
-
-    render: function () {
-      // var usernames = UserModel.model.get("value");
-      this.$el.html('<h1>Assigned Tasks</h1>');
-
-      for(var i = 0; i < app.tasks.length; i++){
-        if(app.tasks.at(i).get('assignee') && app.tasks.at(i).get('assignee') !== app.currentUser){
-          var viewB = new TaskView({model: app.tasks.at(i)});
-          this.$el.append(viewB.$el);
-        }
-    }
-
-    },
-    initialize: function () {
-      this.listenTo(app.tasks, 'change', this.render);
-      this.listenTo(app.tasks, 'update', this.render);
-      app.tasks.fetch();
-    },
-    events : {
-    },
-  });
+  // var AssignedTasksView = Backbone.View.extend({
+  //   tagName: 'div',
+  //   className: 'AssignedTasksView column',
+  //
+  //   render: function () {
+  //     // var usernames = UserModel.model.get("value");
+  //     this.$el.html('<h1>Assigned Tasks</h1>');
+  //
+  //     for(var i = 0; i < app.tasks.length; i++){
+  //       if(app.tasks.at(i).get('assignee') && app.tasks.at(i).get('assignee') !== app.currentUser){
+  //         var viewB = new TaskView({model: app.tasks.at(i)});
+  //         this.$el.append(viewB.$el);
+  //       }
+  //   }
+  //
+  //   },
+  //   initialize: function () {
+  //     this.listenTo(app.tasks, 'change', this.render);
+  //     this.listenTo(app.tasks, 'update', this.render);
+  //     app.tasks.fetch();
+  //   },
+  //   events : {
+  //   },
+  // });
 
 //End Code for Assigned TaskView
 
 
 
 //Code for UserTaskView////////////////////////////
-  var UserTasksView = Backbone.View.extend({
-    tagName: 'div',
-  	className: 'UserTasksView column',
-
-  	render: function () {
-			var usernames = UserModel.model.get("value");
-			this.$el.html('<h1>My Tasks</h1>');
-
-      for(var i = 0; i < app.tasks.length; i++){
-        if(app.tasks.at(i).get('assignee') == app.currentUser){
-          var viewB = new TaskView({model: app.tasks.at(i)});
-          this.$el.append(viewB.$el);
-        }
-    }
-
-  	},
-  	initialize: function () {
-      this.listenTo(app.tasks, 'change', this.render);
-      this.listenTo(app.tasks, 'update', this.render);
-      app.tasks.fetch();
-  	},
-  	events : {
-  	},
-  });
+  // var UserTasksView = Backbone.View.extend({
+  //   tagName: 'div',
+  // 	className: 'UserTasksView column',
+  //
+  // 	render: function () {
+	// 		var usernames = UserModel.model.get("value");
+	// 		this.$el.html('<h1>My Tasks</h1>');
+  //
+  //     for(var i = 0; i < app.tasks.length; i++){
+  //       if(app.tasks.at(i).get('assignee') == app.currentUser){
+  //         var viewB = new TaskView({model: app.tasks.at(i)});
+  //         this.$el.append(viewB.$el);
+  //       }
+  //   }
+  //
+  // 	},
+  // 	initialize: function () {
+  //     this.listenTo(app.tasks, 'change', this.render);
+  //     this.listenTo(app.tasks, 'update', this.render);
+  //     app.tasks.fetch();
+  // 	},
+  // 	events : {
+  // 	},
+  // });
 //End Code for UserTaskView///////////////////////////
 
 
@@ -109,43 +112,22 @@ var AddTaskView = Backbone.View.extend({
   var UserView = Backbone.View.extend({
     id : 'UserView',
     initialize: function () {
-      this.listenTo(app.tasks, 'sync', this.hi);
-      // app.tasks.on('sync', this.hi);
-      app.tasks.fetch();
-      },
+      this.render();
+    },
   	render: function() {
-			var $header   = $('<div id="greeting">');
-			var greeting = '<h1>Hi, '+ app.currentUser + '!</h1>';
-			var btn = '<button id="newTask">Create A New Task</button>';
-      var logout   = '<button id = "logout">Log-Out</button>';
-      var all =  greeting + btn + logout;
-		this.$el.html(all);
-
-      $('#app').append(this.$el); // TODO: check if this works or not?
+      app.tasks.fetch();
+      var addTaskView = new AddTaskView();
 	  },
-
-    hi: function() {
-      // console.log("you have successfully listened to a sync event");
-    },
     events: {
-      'click #newTask' : 'newTask',
-      'click #logout'  : "logout"
-    },
-    display: function() {
-      console.log("you are clicking logout");
-       app.router.navigate('loggedout', true);
-       this.remove();
     },
     newTask: function () {
-      var addTask = new AddTaskView();
-      addTask.render();
-      this.$el.append(addTask.$el);
+      // var addTask = new AddTaskView();
+      // addTask.render();
+      // this.$el.append(addTask.$el);
     },
-
   	logout: function() {
-  		// this.$el.empty();
-      $('#app').html('');
-  		app.gui.switchToLogin();
+      // $('#app').html('');
+  		// app.gui.switchToLogin();
   	}
 });
 //End Code for UserView///////////////////////
@@ -154,80 +136,63 @@ var AddTaskView = Backbone.View.extend({
 
 //Code for the Login View ////////////////////////////////
 var LoginView = Backbone.View.extend({
-  id : 'LoginView',
-	render: function() {
-		var button = '<button id = "login">Login</button>';
-    // app.users.fetch();
-		var users = app.users.pluck("username");
-    // console.log('client sees these users',app.users);
-		var dropdown = '<select id = "dropdown">';
-    users.forEach(function(element){dropdown += "<option>"+element+"</option>";});
-		dropdown += ('</select>');
-		var title = '<h1>Please Choose A Username</h1>';
-    var title1 = '<br><br><h3>Not A User? Sign Up:</h3>';
-    var form = '<form id = "form"><input id = "input" placeholder="Add a user"></input><button type = "submit" id = "submit">Submit</button></form>';
-		var all =  title + dropdown + button + title1 + form;
-		this.$el.html(  all );
-	},
-	delete: function() {
-			this.$el.html('');
-	},
+  id: 'LoginView',
 	initialize: function() {
-		this.listenTo(app.users, "update", this.render);
-    // this.listenTo(app.users, 'change', this.render);
-    app.users.fetch();
-    app.tasks.fetch();
-    // app.users.invoke('save');
     this.render();
 	},
-  display : function() {
-    console.log("you are clicking login");
-     app.router.navigate('loggedin', true);
-     this.remove();
-  },
+	render: function() {
+    var $loginForm = $('<form id="login-form">');
+    var $loginUser = $('<input id="login-name" type="text" placeholder="test">  </input>');
+    var $loginPassword = $('<input id="login-password" type="password" placeholder="password">  </input>');
+    var $loginSubmit = $('<input type="submit" id="login-submit" value="submit">');
+    // var $loginSubmit = $('<input type="submit" value="submit">';
+    $loginForm.append($loginUser).append($loginPassword).append($loginSubmit);
+    this.$el.append($loginForm);
+    $('#app').html(this.$el);
+	},
 	events: {
-		"click #logout" : "logout",
-		"click #login" : "login",
-    'click #submit' : "newUser",
-    // 'click #login' : 'display'
+    'submit #login-form' : 'login'
 	},
-	login: function() {
-		app.currentUser = $('#dropdown').val();
-    this.remove();
-			app.gui.switchToUser();
-	},
-	logout: function() {
-		this.$el.empty();
-		this.remove();
-		app.gui.switchToLogin();
-	},
-  newUser : function (event) {
-    console.log('newUser event triggered');
+	login: function(event) {
     event.preventDefault();
-    var username = $('#input').val();
-    // app.users.fetch();
-    app.users.create({username: username });
-    // app.users.save();
-  }
-
+    var userName = $('#login-name').val().toUpperCase();
+    var userPassword = $('#login-password').val().toUpperCase();
+    var user = {
+      name: userName,
+      password: userPassword
+    };
+    $.ajax({
+      method: "PUT",
+      url: "/login",
+      data: user
+    })
+    .done(function(tasks) {
+      if (tasks == "incorrect password") {
+        alert("incorrect password");
+      }
+      else if (tasks === false) {
+        alert("no record of user");
+      }
+      else {
+        $('#app').html('');
+        var userView = new UserView();
+        // tasks.map(function (val, index, array){
+        //   app.tasks.create(val, {silent: true});
+        // });
+        localStorage.setItem('todoUserName', userName);
+      }
+    });
+	}
 });
 
 //End Code for Login View//////////////////////////////
 
 function GUI(users,tasks,el) {
-	this.switchToUser = function (){
-		var userView = new UserView();
-		userView.render();
-		$('#app').append(userView.$el);
-	};
-	 this.switchToLogin = function() {
-		 var login = new LoginView();
-		 login.render();
-		 $("#app").append(login.$el);
-   };
-	  var currentUser = this.currentUser;
-    this.switchToLogin();
+  // var userView = new UserView();
+  // userView.render();
+  // $('#app').html(userView.$el);
+  var loginView = new LoginView();
 }
+  return GUI;
 
-return GUI;
-}())
+}());

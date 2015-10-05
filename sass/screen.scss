@@ -1,0 +1,49 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "compass/reset";
+@import "grids";
+@import "compass";
+
+
+// $bg-color: #818181;
+// $bg-color: #121C25;
+$bg-color: #00796B;
+$font-size: 1em;
+$letter-spacing: .25em;
+
+* {
+  box-sizing: border-box;
+}
+body {
+  background-color: #FFFFFF;
+  font-size: $font-size;
+}
+#app {
+  @include container;
+  @include box-sizing(border-box);
+}
+#login-form {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 30px;
+  background-color: $bg-color;
+  color: whitesmoke;
+  letter-spacing: $letter-spacing;
+  text-transform: uppercase;
+
+  #login-name, #login-password, #login-submit {
+    height: 60px;
+    width: 100%;
+    display: block;
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid #cfcfcf;
+    background-color: inherit;
+    color: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+  };
+};

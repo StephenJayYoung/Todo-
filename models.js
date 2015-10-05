@@ -1,6 +1,7 @@
 var UserModel = Backbone.Model.extend({
 	defaults: {
-		username:''
+		username:'',
+		password:''
 	},
 	// url : "/tasks",
 	currentUser : ''
