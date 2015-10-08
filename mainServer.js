@@ -3,7 +3,6 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 //Nate's
 var db = require('orchestrate')('ccbb65c6-d9ab-4d26-9691-c38d21fe2fc6');
-
 var app = express();
 // var count = 0;
 // var counter = 3;
@@ -21,6 +20,7 @@ app.put('/login', function (req, res) {
   var loginPassword = req.body.password;
   console.log(loginUser);
 
+//the name has to match the collection (todoUser) (need to change this in orchestrate)
   db.search('todoUser', 'value.name: ' + ("" + loginUser) )
   .then(function (result) {
     var dbPassword = result.body.results[0].value.password;
