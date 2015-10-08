@@ -12,13 +12,11 @@ var IssueModel = Backbone.Model.extend({
 	defaults: {
 		title:'',
 		description:'',
-		creator:'',
-		assignee:'',
+		due: '',
+		priority: '',
+		shared: [],
 		status:'unassigned'
 	},
-	// ur : "/tasks"
-
-	// Add methods if needed...
 });
 
 // IssueModel.fetch();

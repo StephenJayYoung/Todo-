@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 //Nate's
 var db = require('orchestrate')('ccbb65c6-d9ab-4d26-9691-c38d21fe2fc6');
 
@@ -22,9 +23,9 @@ app.put('/login', function (req, res) {
 
   db.search('todoUser', 'value.name: ' + ("" + loginUser) )
   .then(function (result) {
-
-    if (result.body.results.length) {
-      var dbPassword = result.body.results[0].value.password;
+    var dbPassword = result.body.results[0].value.password;
+    var dbUser = result.body.results[0].value.name;
+    if (loginUser == dbUser) {
       if (loginPassword == dbPassword) {
         console.log('match');
         res.send(true);
@@ -34,7 +35,7 @@ app.put('/login', function (req, res) {
       }
     }
     else {
-      res.send(false);
+      res.send("no record of user");
     }
   });
 });
@@ -64,8 +65,17 @@ app.put('/login', function (req, res) {
 // });
 
 app.get('/tasks', function (req, res) {
-  res.send('received');
+    console.log("app.get/tasks");
 
+    db.list('tasks')
+    .then(function (result){
+      var tasks = [];
+      var resultBody = result.body.results;
+      resultBody.map(function(element, index, array) {
+        tasks.push(element.value);
+      });
+      res.send(tasks);
+    });
 });
 
 

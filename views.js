@@ -5,46 +5,99 @@ var GUI = (function(){ //IIFE for all Views
 
 //Code for AddTaskView
 var AddTaskView = Backbone.View.extend({
-    className: 'modal',
+    className: 'addtaskview',
 
-    render: function(){
-      var $form = $('<form>');
-      var $title = $('<input type="text" name="title" id="title" placeholder="task title">');
-      var $description = $('<input type="text" name="description" id="description" placeholder="task description">');
-      var $dueDate = $('<input type="text" name="dueDate" id="dueDate" placeholder="task due date">');
-      var $importance = $('<input type="text" name="importance" id="importance" placeholder="importance">');
-      var $submit = $('<button id="submit">Submit</button>');
-      $form.append([$dueDate, $title, $description, $importance, $submit] );
-      this.$el.html($form);
-    },
-
-    initialize: function(){
-      $('#app').addClass('faded');
+    initialize: function() {
       this.render();
-      $('#app').append(this.$el);
     },
-
+    render: function() {
+      var $addtask = $('<input id="addtask" type="text" placeholder="add task"></input>');
+      var $descriptionInput = $('<textarea id="descriptionInput" placeholder="add description"> </textarea>');
+      var $timeIcon = $('<div id="datepickerIcon"> </div>').html('<i class="fa fa-calendar"></i>   <input id="datepicker" placeholder="enter date"></input>');
+      var $priority = $('<div id="priority"> </div>').html('<i class="fa fa-star"></i>');
+      var $tag = $('<div id="tag"> </div>').html('<i class="fa fa-folder-o"></i>');
+      var $submitTask = $('<div id="submitTask"> </div>').html('<i class="fa fa-check"></i>');
+      var $discard = $('<div id="discard"> </div>').html('<i class="fa fa-undo">');
+      this.$el.append($addtask, $descriptionInput, $timeIcon, $priority, $tag, $submitTask, $discard);
+    },
     events: {
-      'click #submit' : 'addTask'
-    },
+      'click #datepicker': 'calendar'
 
-    addTask : function(event) {
-      event.preventDefault();
-      var task = {
-        title : this.$el.find('#title').val(),
-        description : this.$el.find('#description').val(),
-        dueDate: this.$el.find('#dueDate').val(),
-        importance: this.$el.find('#importance').val(),
-        creator : app.currentUser
-      };
-      app.tasks.create( task );
-      AssignedTasksView.render();
-      console.log('task length is now ',app.tasks.length);
-      this.remove();
-      $('#app').removeClass('faded');
     },
+    calendar: function() {
+      // $('#datepicker').trigger('click');
+      $('#datepicker').datepicker();
+      $('#datepicker').datepicker('show');
+
+
+      // $('#ui-datepicker-div').css({
+      //   "position": "absolute",
+      //   "top": "191.75px",
+      //   "left": "57.05px",
+      //   "z-index": "1"
+      // });
+    },
+    addTask: function(event) {
+      event.preventDefault();
+
+
+
+
+
+      var task = {
+        title: this.$el.find('#addtask').val(),
+        description: this.$el.find('#descriptionInput').val(),
+      };
+
+
+    }
+
+
+
+
+
+
+
+    // render: function(){
+    //   var $form = $('<form>');
+    //   var $title = $('<input type="text" name="title" id="title" placeholder="task title">');
+    //   var $description = $('<input type="text" name="description" id="description" placeholder="task description">');
+    //   var $dueDate = $('<input type="text" name="dueDate" id="dueDate" placeholder="task due date">');
+    //   var $importance = $('<input type="text" name="importance" id="importance" placeholder="importance">');
+    //   var $submit = $('<button id="submit">Submit</button>');
+    //   $form.append([$dueDate, $title, $description, $importance, $submit] );
+    //   this.$el.html($form);
+    // },
+    //
+    // initialize: function(){
+    //   $('#app').addClass('faded');
+    //   this.render();
+    //   $('#app').append(this.$el);
+    // },
+    //
+    // events: {
+    //   'click #submit' : 'addTask'
+    // },
+    //
+    // addTask : function(event) {
+    //   event.preventDefault();
+    //   var task = {
+    //     title : this.$el.find('#title').val(),
+    //     description : this.$el.find('#description').val(),
+    //     dueDate: this.$el.find('#dueDate').val(),
+    //     importance: this.$el.find('#importance').val(),
+    //     creator : app.currentUser
+    //   };
+    //   app.tasks.create( task );
+    //   AssignedTasksView.render();
+    //   console.log('task length is now ',app.tasks.length);
+    //   this.remove();
+    //   $('#app').removeClass('faded');
+    // },
   });
-//End code for addTaskView
+
+
+
 
 
 //Code for AssignedTaskView
@@ -115,8 +168,14 @@ var AddTaskView = Backbone.View.extend({
       this.render();
     },
   	render: function() {
-      app.tasks.fetch();
-      var addTaskView = new AddTaskView();
+      if ( Cookies.get('todoUserName') ) {
+        var addTaskView = new AddTaskView();
+        this.$el.append(addTaskView.$el);
+        $('#app').html(this.$el);
+      }
+      else {
+        var loginView = new LoginView();
+      }
 	  },
     events: {
     },
@@ -134,7 +193,7 @@ var AddTaskView = Backbone.View.extend({
 
 
 
-//Code for the Login View ////////////////////////////////
+//LoginView
 var LoginView = Backbone.View.extend({
   id: 'LoginView',
 	initialize: function() {
@@ -145,8 +204,7 @@ var LoginView = Backbone.View.extend({
     var $loginUser = $('<input id="login-name" type="text" placeholder="test">  </input>');
     var $loginPassword = $('<input id="login-password" type="password" placeholder="password">  </input>');
     var $loginSubmit = $('<input type="submit" id="login-submit" value="submit">');
-    // var $loginSubmit = $('<input type="submit" value="submit">';
-    $loginForm.append($loginUser).append($loginPassword).append($loginSubmit);
+    $loginForm.append($loginUser,$loginPassword,$loginSubmit);
     this.$el.append($loginForm);
     $('#app').html(this.$el);
 	},
@@ -170,29 +228,22 @@ var LoginView = Backbone.View.extend({
       if (tasks == "incorrect password") {
         alert("incorrect password");
       }
-      else if (tasks === false) {
+      else if (tasks == "no record of user") {
         alert("no record of user");
       }
       else {
-        $('#app').html('');
+        Cookies.set('todoUserName', userName);
         var userView = new UserView();
-        // tasks.map(function (val, index, array){
-        //   app.tasks.create(val, {silent: true});
-        // });
-        localStorage.setItem('todoUserName', userName);
       }
     });
 	}
 });
 
-//End Code for Login View//////////////////////////////
 
+//GUI
 function GUI(users,tasks,el) {
-  // var userView = new UserView();
-  // userView.render();
-  // $('#app').html(userView.$el);
-  var loginView = new LoginView();
+  var userView = new UserView();
 }
-  return GUI;
 
+  return GUI;
 }());
