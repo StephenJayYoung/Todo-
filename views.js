@@ -37,7 +37,7 @@ var AddTaskView = Backbone.View.extend({
       app.tasks.create( task );
       var assignedTasksView = new AssignedTasksView();
       assignedTasksView.render();
-      console.log('task length is now ',app.tasks.length);
+      // console.log('task length is now ',app.tasks.length);
       this.remove();
       // $('#app').removeClass('faded');
     },
@@ -50,11 +50,26 @@ var AddTaskView = Backbone.View.extend({
   var AssignedTasksView = Backbone.View.extend({
     // tagName: 'div',
     // className: 'AssignedTasksView column',
+    // TODO: get this to display all of the task data in a div once created.
     render: function () {
     	console.log('cheese');
-    	// var $theTasks = app.tasks;
-    	// var $deleteTask = $('<button id="delete">Delete Task</button>');
-     //  this.$el.html($deleteTask + $theTasks);
+     //  console.log('task length is now ',app.tasks.length);
+//TODO: add the data here from the assigned tasks above
+    
+
+      var $editTask = $('<button id="editTask">Edit Task</button>');
+      // var $completeTask = $('<button id="completeTask">Mark as Completed</button>');
+
+      this.$el.html($editTask);
+
+      // var theTasks = app.tasks;
+      // console.log(theTasks);
+
+
+
+      // var $description = $('<input type="text" name="description" id="description" placeholder="task description">');
+      // var $deleteTask = $('<button id="delete">Delete Task</button>');
+      // this.$el.html($description);
 
     //   for(var i = 0; i < app.tasks.length; i++){
     //     if(app.tasks.at(i).get('assignee') && app.tasks.at(i).get('assignee') !== app.currentUser){
@@ -62,16 +77,22 @@ var AddTaskView = Backbone.View.extend({
     //       this.$el.append(viewB.$el);
     //     }
     // }
-
     },
     initialize: function () {
-      this.listenTo(app.tasks, 'change', this.render);
-      this.listenTo(app.tasks, 'update', this.render);
-      app.tasks.fetch();
+    this.render();
+      $('#app').append(this.$el);
     },
     events : {
-    	'click #delete' : 'deleteTask'
+    	'click #editTask' : 'edit',
+      // 'click #completeTask' : 'markAsCompleted'
+
     },
+        edit: function() {
+        console.log("edit the things");
+    },
+    //     markAsCompleted: function() {
+    //     console.log("the task is completed (render a new appended view)");
+    // }
   });
 
 //End Code for Assigned TaskView
@@ -113,7 +134,7 @@ var AddTaskView = Backbone.View.extend({
     // id : 'UserView',
     initialize: function () {
       // this.listenTo(app.tasks, 'sync', this.hi);
-      // // app.tasks.on('sync', this.hi);
+      // app.tasks.on('sync', this.hi);
       // app.tasks.fetch();
       },
   	render: function() {
@@ -128,7 +149,7 @@ var AddTaskView = Backbone.View.extend({
 	  },
 
     hi: function() {
-      // console.log("you have successfully listened to a sync event");
+      console.log("you have successfully listened to a sync event");
     },
     events: {
       'click #newTask' : 'newTask',
