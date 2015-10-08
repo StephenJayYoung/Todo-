@@ -59,7 +59,8 @@ var AddTaskView = Backbone.View.extend({
 
       var $editTask = $('<button id="editTask">Edit Task</button>');
       // var $completeTask = $('<button id="completeTask">Mark as Completed</button>');
-
+      //add "complete task", "delete task"
+      //add the data from the previous view
       this.$el.html($editTask);
 
       // var theTasks = app.tasks;
