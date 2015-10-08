@@ -82,6 +82,8 @@ var AddTaskView = Backbone.View.extend({
     initialize: function () {
     this.render();
       $('#app').append(this.$el);
+      this.listenTo(app.tasks, 'change', this.render);
+
     },
     events : {
     	'click #editTask' : 'edit',
