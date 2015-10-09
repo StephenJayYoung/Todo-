@@ -55,13 +55,13 @@ var AddTaskView = Backbone.View.extend({
     	console.log('cheese');
      //  console.log('task length is now ',app.tasks.length);
 //TODO: add the data here from the assigned tasks above
-    
 
-      var $editTask = $('<button id="editTask">Edit Task</button>');
-      // var $completeTask = $('<button id="completeTask">Mark as Completed</button>');
-      //add "complete task", "delete task"
-      //add the data from the previous view
-      this.$el.html($editTask);
+
+      var $btn1 = $('<button id="editTask">Edit Task</button>');
+      var $btn2 = $('<button id="completeTask">Complete Task</button>');
+      // var $btn3 = $('<button id="deleteTask">Delete Task</button>');
+      var all = $btn1;
+      this.$el.html(all);
 
       // var theTasks = app.tasks;
       // console.log(theTasks);
@@ -72,12 +72,12 @@ var AddTaskView = Backbone.View.extend({
       // var $deleteTask = $('<button id="delete">Delete Task</button>');
       // this.$el.html($description);
 
-    //   for(var i = 0; i < app.tasks.length; i++){
-    //     if(app.tasks.at(i).get('assignee') && app.tasks.at(i).get('assignee') !== app.currentUser){
-    //       var viewB = new TaskView({model: app.tasks.at(i)});
-    //       this.$el.append(viewB.$el);
-    //     }
-    // }
+      for(var i = 0; i < app.tasks.length; i++){
+        if(app.tasks.at(i).get('assignee') && app.tasks.at(i).get('assignee') !== app.currentUser){
+          var viewB = new TaskView({model: app.tasks.at(i)});
+          this.$el.append(this);
+        }
+    }
     },
     initialize: function () {
     this.render();
@@ -87,8 +87,8 @@ var AddTaskView = Backbone.View.extend({
     },
     events : {
     	'click #editTask' : 'edit',
-      // 'click #completeTask' : 'markAsCompleted'
-
+      'click #completeTask' : 'complete',
+      'click #deleteTask' : 'delete'
     },
         edit: function() {
         console.log("edit the things");
