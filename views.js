@@ -23,7 +23,10 @@ var AddTaskView = Backbone.View.extend({
     },
 
     events: {
-      'click #submit' : 'addTask'
+      'click #submit' : 'addTask',
+      'click #edit' : 'edit',
+      'click #complee' : 'complete',
+      'click #delete' : 'delete'
     },
 
     addTask : function(event) {
@@ -36,7 +39,7 @@ var AddTaskView = Backbone.View.extend({
         creator : app.currentUser
       };
       app.tasks.create(task);
-      var all ='<div>' +'<b>title: </b>' + task.title + ' ' + '<b>description:</b>' + task.description + ' ' + '<b>due date: </b>' + task.dueDate + '</div>' + '<button id="editTask">Edit Task</button>' + '<button id="completeTask">Complete Task</button>' + '<button id="deleteTask">Delete Task</button>';
+      var all ='<div>' +'<b>title: </b>' + task.title + ' ' + '<b>description:</b>' + task.description + ' ' + '<b>due date: </b>' + task.dueDate + '</div>' + '<button id="edit">Edit Task</button>' + '<button id="complete">Complete Task</button>' + '<button id="delete">Delete Task</button>';
       $('#app').append(all);
       this.remove();
       // var assignedTasksView = new AssignedTasksView();
@@ -49,34 +52,6 @@ var AddTaskView = Backbone.View.extend({
 
 
 //Code for AssignedTaskView
-
-  var AssignedTasksView = Backbone.View.extend({
-    render: function () {
-      var $Buttons = $('<button id="editTask">Edit Task</button>' + '<button id="completeTask">Complete Task</button>' + '<button id="deleteTask">Delete Task</button>');
-      this.$el.html($Buttons);
-
-    },
-    initialize: function () {
-    this.render();
-      $('#app').append(this.$el);
-      this.listenTo(app.tasks, 'change', this.render);
-
-    },
-    events : {
-    	'click #editTask' : 'edit',
-      'click #completeTask' : 'complete',
-      'click #deleteTask' : 'delete'
-    },
-        edit: function() {
-        console.log("edit the things");
-    },
-        complete: function() {
-        console.log("edit the things");
-    },
-        delete: function() {
-       all.remove();
-    }
-  });
 
 //End Code for Assigned TaskView
 
