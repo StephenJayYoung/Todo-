@@ -22,6 +22,8 @@ var AddTaskView = Backbone.View.extend({
       this.listenTo(app.tasks, 'complete', this.completeIt);
     },
 
+    //add to submit so that it deletes the stuff in the submit bar and refreshes it.
+
     events: {
       'click #submit' : 'addTask',
       'click #edit' : 'editIt',
@@ -40,8 +42,8 @@ var AddTaskView = Backbone.View.extend({
       };
       app.tasks.create(task);
       var all ='<div>' +'<b>title: </b>' + task.title + ' ' + '<b>description:</b>' + task.description + ' ' + '<b>due date: </b>' + task.dueDate + '</div>' + '<button id="edit">Edit Task</button>' + '<button id="complete">Complete Task</button>' + '<button id="delete">Delete Task</button>';
-      $('#app').append(all);
-      this.remove();
+      this.$el.append(all);
+      // this.remove();
       // var assignedTasksView = new AssignedTasksView();
       // assignedTasksView.render();
 
@@ -54,7 +56,7 @@ var AddTaskView = Backbone.View.extend({
         console.log("complete the things");
     },
         deleteIt: function() {
-          console.log("dlete the things");
+          console.log("delete the things");
      }
   });
 //End code for addTaskView
