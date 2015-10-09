@@ -36,7 +36,7 @@ var AddTaskView = Backbone.View.extend({
         creator : app.currentUser
       };
       app.tasks.create(task);
-      var all = '<div>' + '<h3>My Tasks</h3>' +'</div>' + '<div>' +'<b>title: </b>' + task.title + ' ' + '<b>description:</b>' + task.description + ' ' + '<b>due date: </b>' + task.dueDate + '</div>';
+      var all ='<div>' +'<b>title: </b>' + task.title + ' ' + '<b>description:</b>' + task.description + ' ' + '<b>due date: </b>' + task.dueDate + '</div>' + '<button id="editTask">Edit Task</button>' + '<button id="completeTask">Complete Task</button>' + '<button id="deleteTask">Delete Task</button>';
       $('#app').append(all);
       this.remove();
       // var assignedTasksView = new AssignedTasksView();
