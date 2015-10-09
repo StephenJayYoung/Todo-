@@ -24,9 +24,9 @@ var AddTaskView = Backbone.View.extend({
 
     events: {
       'click #submit' : 'addTask',
-      'click #edit' : 'edit',
-      'click #complee' : 'complete',
-      'click #delete' : 'delete'
+      'click #edit' : 'editIt',
+      'click #complete' : 'completeIt',
+      'click #delete' : 'deleteIt'
     },
 
     addTask : function(event) {
@@ -47,11 +47,39 @@ var AddTaskView = Backbone.View.extend({
 
       // $('#app').removeClass('faded');
     },
+        editIt: function() {
+        console.log("edit the things");
+    },
+        completeIt: function() {
+        console.log("complete the things");
+    },
+        deleteIt: function() {
+          console.log("dlete the things");
+     }
   });
 //End code for addTaskView
 
 
 //Code for AssignedTaskView
+
+  // var AssignedTasksView = Backbone.View.extend({
+  //   render: function () {
+  //     var $Buttons = $('<button id="editTask">Edit Task</button>' + '<button id="completeTask">Complete Task</button>' + '<button id="deleteTask">Delete Task</button>');
+  //     this.$el.html($Buttons);
+
+  //   },
+  //   initialize: function () {
+  //   this.render();
+  //     $('#app').append(this.$el);
+  //     this.listenTo(app.tasks, 'change', this.render);
+
+  //   },
+  //   events : {
+
+  //   },
+
+  //   },
+  // });
 
 //End Code for Assigned TaskView
 
