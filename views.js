@@ -36,21 +36,10 @@ var AddTaskView = Backbone.View.extend({
       };
       app.tasks.create(task);
       var all = '<div>'+ '<b>title: </b>' + task.title + ' ' + '<b>description:</b>' + task.description + ' ' + '<b>due date: </b>' + task.dueDate + '</div>';
-      var description = task.description;
-      var dueDate = task.dueDate;
-      var importance = task.importance;
-      var creator = task.creator;
-      // var all = (title + description + dueDate+ importance+ creator);
-      console.log(all);
       $('#app').append(all);
-
-
-
-
-
+      this.remove();
       var assignedTasksView = new AssignedTasksView();
       assignedTasksView.render();
-      // console.log('task length is now ',app.tasks.length);
       this.remove();
 
       // $('#app').removeClass('faded');
@@ -72,11 +61,8 @@ var AddTaskView = Backbone.View.extend({
 //TODO: add the data here from the assigned tasks above
 
 
-      var $btn1 = $('<button id="editTask">Edit Task</button>');
-      // var $btn2 = $('<button id="completeTask">Complete Task</button>');
-      // var $btn3 = $('<button id="deleteTask">Delete Task</button>');
-      var all = $btn1;
-      this.$el.html(all);
+      var $buttons = $('<button id="editTask">Edit Task</button>' + '<button id="completeTask">Complete Task</button>' + '<button id="deleteTask">Delete Task</button>');
+      this.$el.html($buttons);
       // var theTasks = app.tasks;
       // console.log(theTasks);
 
