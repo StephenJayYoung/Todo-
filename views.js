@@ -34,11 +34,25 @@ var AddTaskView = Backbone.View.extend({
         importance: this.$el.find('#importance').val(),
         creator : app.currentUser
       };
-      app.tasks.create( task );
+      app.tasks.create(task);
+      var all = '<div>'+ '<b>title: </b>' + task.title + ' ' + '<b>description:</b>' + task.description + ' ' + '<b>due date: </b>' + task.dueDate + '</div>';
+      var description = task.description;
+      var dueDate = task.dueDate;
+      var importance = task.importance;
+      var creator = task.creator;
+      // var all = (title + description + dueDate+ importance+ creator);
+      console.log(all);
+      $('#app').append(all);
+
+
+
+
+
       var assignedTasksView = new AssignedTasksView();
       assignedTasksView.render();
       // console.log('task length is now ',app.tasks.length);
       this.remove();
+
       // $('#app').removeClass('faded');
     },
   });
@@ -52,17 +66,17 @@ var AddTaskView = Backbone.View.extend({
     // className: 'AssignedTasksView column',
     // TODO: get this to display all of the task data in a div once created.
     render: function () {
-    	console.log('cheese');
-     //  console.log('task length is now ',app.tasks.length);
+    	// console.log('cheese');
+      // console.log(app.tasks.task);
+      // console.log('task length is now ',app.tasks.length);
 //TODO: add the data here from the assigned tasks above
 
 
       var $btn1 = $('<button id="editTask">Edit Task</button>');
-      var $btn2 = $('<button id="completeTask">Complete Task</button>');
+      // var $btn2 = $('<button id="completeTask">Complete Task</button>');
       // var $btn3 = $('<button id="deleteTask">Delete Task</button>');
       var all = $btn1;
       this.$el.html(all);
-
       // var theTasks = app.tasks;
       // console.log(theTasks);
 
@@ -103,30 +117,30 @@ var AddTaskView = Backbone.View.extend({
 
 
 //Code for UserTaskView////////////////////////////
-  var UserTasksView = Backbone.View.extend({
-   //  tagName: 'div',
-  	// className: 'UserTasksView column',
+  // var UserTasksView = Backbone.View.extend({
+  //  //  tagName: 'div',
+  // 	// className: 'UserTasksView column',
 
-  	render: function () {
-			var usernames = UserModel.model.get("value");
-			this.$el.html('<h1>My Tasks</h1>');
+  // 	render: function () {
+		// 	var usernames = UserModel.model.get("value");
+		// 	this.$el.html('<h1>My Tasks</h1>');
 
-      for(var i = 0; i < app.tasks.length; i++){
-        if(app.tasks.at(i).get('assignee') == app.currentUser){
-          var viewB = new TaskView({model: app.tasks.at(i)});
-          this.$el.append(viewB.$el);
-        }
-    }
+  //     for(var i = 0; i < app.tasks.length; i++){
+  //       if(app.tasks.at(i).get('assignee') == app.currentUser){
+  //         var viewB = new TaskView({model: app.tasks.at(i)});
+  //         this.$el.append(viewB.$el);
+  //       }
+  //   }
 
-  	},
-  	initialize: function () {
-      this.listenTo(app.tasks, 'change', this.render);
-      this.listenTo(app.tasks, 'update', this.render);
-      app.tasks.fetch();
-  	},
-  	events : {
-  	},
-  });
+  // 	},
+  // 	initialize: function () {
+  //     this.listenTo(app.tasks, 'change', this.render);
+  //     this.listenTo(app.tasks, 'update', this.render);
+  //     app.tasks.fetch();
+  // 	},
+  // 	events : {
+  // 	},
+  // });
 //End Code for UserTaskView///////////////////////////
 
 
@@ -204,6 +218,7 @@ var LoginView = Backbone.View.extend({
     // this.listenTo(app.users, 'change', this.render);
     app.users.fetch();
     app.tasks.fetch();
+    console.log(app.tasks.fetch);
     // app.users.invoke('save');
     this.render();
 	},
